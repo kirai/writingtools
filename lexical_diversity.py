@@ -1,6 +1,7 @@
 import nltk
-from nltk import pos_tag, word_tokenize
+from nltk import pos_tag, word_tokenize, tokenize
 from nltk import FreqDist
+from nltk.tokenize import sent_tokenize
 
 # All words average
 def lexical_diversity(text):
@@ -38,9 +39,14 @@ def word_length_distribution(text):
 
     return fdist.items()
 
+def avg_sentence_length(text):
+    lengths = [len(sent) for sent in sent_tokenize(text)]
+    avg = sum(lengths) / float(len(lengths))
+    return avg
+
 if __name__ == "__main__":
-    text = "The tomato is delicious and the arrow flies like an elephant. I like animals, specially elephants. australopitecusapharensis this is weird tomato I like tomato a lot and animals an elephants. The weird tomato sits on the table. The arrow flies in the wind"
-    tokens = word_tokenize(text)
+    raw_text = "The tomato is delicious and the arrow flies like an elephant. I like animals, specially elephants. australopitecusapharensis this is weird tomato I like tomato a lot and animals an elephants. The weird tomato sits on the table. The arrow flies in the wind"
+    tokens = word_tokenize(raw_text)
     text = nltk.Text(tokens)
 
     print("Analyzing text:")
@@ -66,9 +72,16 @@ if __name__ == "__main__":
     print(frequent_long_words(text))
 
     # Collocations, paris of words that occur together unusually often
-    print("Collocattions:")
+    print("Collocations:")
     print(text.collocations())
 
     # Distribution of the lengthes of the words
     print("Word length distribution:")
     print(word_length_distribution(text))
+
+    print("Frequency of word tomato")
+    print(FreqDist(text).freq('tomato'))
+
+    #Average sentence length
+    print("Average sentence length")
+    print(avg_sentence_length(raw_text))
