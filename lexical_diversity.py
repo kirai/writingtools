@@ -42,6 +42,9 @@ def word_length_distribution(text):
 def avg_sentence_length(text):
     lengths = [len(sent) for sent in sent_tokenize(text)]
     avg = sum(lengths) / float(len(lengths))
+    from functools import *
+    reduce(lambda x, y: x + y, l) / len(l)
+
     return avg
 
 if __name__ == "__main__":
